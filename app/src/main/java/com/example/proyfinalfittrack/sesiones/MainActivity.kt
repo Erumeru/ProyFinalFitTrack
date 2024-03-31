@@ -1,21 +1,23 @@
-package com.example.proyfinalfittrack
+package com.example.proyfinalfittrack.sesiones
 
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.example.proyfinalfittrack.R
 import com.example.proyfinalfittrack.db.DatabaseHelper
 import com.example.proyfinalfittrack.entities.User
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var btnUnirse : Button
+    private lateinit var tvLogin : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btnUnirse=findViewById(R.id.btnUnete)
+        tvLogin=findViewById(R.id.tvIniciarSesion)
 
         btnUnirse.setOnClickListener {
 
@@ -61,6 +64,11 @@ class MainActivity : AppCompatActivity() {
 
             selectAll()
 
+        }
+
+        tvLogin.setOnClickListener(){
+            val login= Intent(this,activityLogin::class.java)
+            startActivity(login)
         }
 
     }
