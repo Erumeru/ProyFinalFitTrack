@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ProyFinalFitTrack"
         tools:targetApi="31">
         <activity
+            android:name=".dashboard.dashboard"
+            android:exported="false" />
+        <activity
             android:name=".sesiones.activityLogin"
             android:exported="false" />
         <activity

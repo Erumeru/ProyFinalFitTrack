@@ -128,7 +128,7 @@
                 android:paddingTop="10dp"
                 >
                 <Button
-                    android:id="@+id/btnUnete"
+                    android:id="@+id/btnLogin"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/verdePrincipal"
@@ -138,7 +138,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/sspro_regular"
                     android:textFontWeight="600"
-                    android:text="¡Únete ahora!"
+                    android:text="¡Inicia sesión!"
                     android:textSize="16dp"
 
                     />
@@ -155,7 +155,7 @@
                     android:fontFamily="@font/sspro_regular"
                     android:gravity="center"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnUnete"
+                    app:layout_constraintTop_toBottomOf="@+id/btnLogin"
                     android:paddingEnd="30dp"
                     />
                 <TextView
@@ -165,8 +165,8 @@
                     android:textColor="@color/white"
                     android:text="Registrate"
                     android:fontFamily="@font/sourcesanspro_bold"
-                    app:layout_constraintTop_toBottomOf="@+id/btnUnete"
-                    app:layout_constraintEnd_toEndOf="@id/btnUnete"
+                    app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+                    app:layout_constraintEnd_toEndOf="@id/btnLogin"
                     android:gravity="center"
                     android:paddingEnd="10dp"
                     android:paddingTop="5dp"

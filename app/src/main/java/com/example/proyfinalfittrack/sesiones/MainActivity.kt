@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun isEmailUsado(email: String): Boolean {
-        val dbHelper = DatabaseHelper(this) // Reemplaza 'context' con tu contexto real
+        val dbHelper = DatabaseHelper(this)
         val db = dbHelper.readableDatabase
 
         val query = "SELECT COUNT(*) FROM users WHERE correo = ?"
