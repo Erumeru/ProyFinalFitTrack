@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
+
+    <style name="RoundCornersDown">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomRight">30dp</item>
+        <item name="cornerSizeBottomLeft">30dp</item>
+    </style>
+
+    <style name="CircleImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- Usar 50% hace que las esquinas sean redondeadas a la mitad del tamaño del ImageView, creando un círculo -->
+    </style>
+</resources>

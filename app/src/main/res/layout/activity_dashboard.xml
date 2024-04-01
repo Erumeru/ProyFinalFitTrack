@@ -4,7 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondoGris"
     tools:context=".dashboard.dashboard">
+
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <com.google.android.material.imageview.ShapeableImageView
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/iVportada"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:src="@drawable/portada"
+                app:shapeAppearanceOverlay="@style/RoundCornersDown"
+                android:scaleType="centerCrop"
+                />
+            <View
+                android:id="@+id/viewCirculoPofile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="@drawable/circle_profilepic"
+                app:layout_constraintTop_toBottomOf="@id/iVportada"
+                app:layout_constraintStart_toStartOf="@id/iVportada"
+                app:layout_constraintEnd_toEndOf="@id/iVportada"
+                app:layout_constraintBottom_toBottomOf="@id/iVportada"
+            />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageProfile"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:background="@drawable/profile_pic"
+                app:shapeAppearanceOverlay="@style/CircleImageStyle"
+                app:layout_constraintTop_toBottomOf="@id/iVportada"
+                app:layout_constraintStart_toStartOf="@id/iVportada"
+                app:layout_constraintEnd_toEndOf="@id/iVportada"
+                app:layout_constraintBottom_toBottomOf="@id/iVportada"
+                />
+            <TextView
+                android:id="@+id/tvNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/viewCirculoPofile"
+                app:layout_constraintStart_toStartOf="@id/viewCirculoPofile"
+                app:layout_constraintEnd_toEndOf="@id/viewCirculoPofile"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:textSize="23dp"
+                android:text="Azzert"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </FrameLayout>
+
 
 
 

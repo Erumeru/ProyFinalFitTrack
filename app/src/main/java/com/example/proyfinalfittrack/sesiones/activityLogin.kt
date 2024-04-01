@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.proyfinalfittrack.R
+import com.example.proyfinalfittrack.dashboard.dashboard
 import com.example.proyfinalfittrack.db.DatabaseHelper
 
 class activityLogin : AppCompatActivity() {
@@ -35,12 +36,15 @@ class activityLogin : AppCompatActivity() {
 
             if(isUserCreated(correo,pass)) {
                 println("REGISTRADO")
+                val nombre = getUserNameByEmail(correo)
+                val dashboard= Intent(this,dashboard::class.java)
+                dashboard.putExtra("nombreUsuario", nombre)
+                startActivity(dashboard)
             }else{
                 showAlert(this, "Error en credenciales", "Las credenciales son incorrectas.")
                 return@setOnClickListener
             }
         }
-
     }
 
     fun showAlert(context: Context, title: String, message: String) {
@@ -71,6 +75,27 @@ class activityLogin : AppCompatActivity() {
         db.close()
 
         return count > 0
+    }
+
+    fun getUserNameByEmail(email: String): String? {
+        val dbHelper = DatabaseHelper(this)
+        val db = dbHelper.readableDatabase
+        var userName: String? = null
+
+        val query = "SELECT nombre FROM users WHERE correo = ?"
+        val cursor = db.rawQuery(query, arrayOf(email))
+
+        if (cursor.moveToFirst()) {
+            val columnNameIndex= cursor.getColumnIndex("nombre")
+            if(columnNameIndex!=-1){
+                userName=cursor.getString(columnNameIndex)
+            }
+        }
+
+        cursor.close()
+        db.close()
+
+        return userName
     }
 
 }
