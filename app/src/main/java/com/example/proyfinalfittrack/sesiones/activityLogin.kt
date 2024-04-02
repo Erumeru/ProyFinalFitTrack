@@ -37,8 +37,10 @@ class activityLogin : AppCompatActivity() {
             if(isUserCreated(correo,pass)) {
                 println("REGISTRADO")
                 val nombre = getUserNameByEmail(correo)
+                val id= getUserIdByEmail(correo)
                 val dashboard= Intent(this,dashboard::class.java)
                 dashboard.putExtra("nombreUsuario", nombre)
+                dashboard.putExtra("idUsuario", id)
                 startActivity(dashboard)
             }else{
                 showAlert(this, "Error en credenciales", "Las credenciales son incorrectas.")
@@ -97,5 +99,27 @@ class activityLogin : AppCompatActivity() {
 
         return userName
     }
+
+    fun getUserIdByEmail(email: String): Int {
+        val dbHelper = DatabaseHelper(this)
+        val db = dbHelper.readableDatabase
+        var userId = -1
+
+        val query = "SELECT id FROM users WHERE correo = ?"
+        val cursor = db.rawQuery(query, arrayOf(email))
+
+        if (cursor.moveToFirst()) {
+            val columnIndex = cursor.getColumnIndex("id")
+            if (columnIndex != -1) {
+                userId = cursor.getInt(columnIndex)
+            }
+        }
+
+        cursor.close()
+        db.close()
+
+        return userId
+    }
+
 
 }

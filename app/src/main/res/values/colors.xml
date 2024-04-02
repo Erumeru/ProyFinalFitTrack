@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="fondoGris">#212020</color>
     <color name="verdePrincipal">#4FC632</color>
+    <color name="grisClaro">#2C2B2B</color>
+    <color name="rosa">#D54ED7</color>
+    <color name="azul">#2AA1E4</color>
+
 </resources>

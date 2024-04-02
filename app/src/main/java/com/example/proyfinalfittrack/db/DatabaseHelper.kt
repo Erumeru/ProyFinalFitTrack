@@ -1,8 +1,11 @@
 package com.example.proyfinalfittrack.db
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
+import com.example.proyfinalfittrack.entities.Entrenamiento
 
 class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,DATABASE_VERSION){
 
@@ -16,6 +19,25 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         private const val COLUMN_CORREO = "correo"
         private const val COLUMN_PASSWORD = "password"
 
+        private const val TABLE_ENTRENAMIENTOS = "entrenamientos"
+        private const val COLUMN_ENTRENAMIENTO_ID = "entrenamiento_id"
+        private const val COLUMN_USER_ID = "user_id"
+        private const val COLUMN_FECHA = "fecha"
+        private const val COLUMN_TIPO = "tipo"
+        private const val COLUMN_DISTANCIA = "distancia"
+
+
+        private const val CREATE_TABLE_ENTRENAMIENTOS = ("CREATE TABLE $TABLE_ENTRENAMIENTOS (" +
+                "$COLUMN_ENTRENAMIENTO_ID INTEGER PRIMARY KEY," +
+                "$COLUMN_USER_ID INTEGER," +
+                "$COLUMN_FECHA INTEGER,"+
+                "$COLUMN_TIPO TEXT,"+
+                "$COLUMN_DISTANCIA REAL,"+
+
+                //llave foranea a id de usuario
+                "FOREIGN KEY($COLUMN_USER_ID) REFERENCES $TABLE_NAME($COLUMN_ID))")
+
+
         private const val CREATE_TABLE = ("CREATE TABLE $TABLE_NAME (" +
                 "$COLUMN_ID INTEGER PRIMARY KEY," +
                 "$COLUMN_NOMBRE TEXT,"+
@@ -23,14 +45,77 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
                 "$COLUMN_PASSWORD TEXT)")
     }
 
-    override fun onCreate(db: SQLiteDatabase) {
 
+
+    override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(CREATE_TABLE)
+        db.execSQL(CREATE_TABLE_ENTRENAMIENTOS)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_ENTRENAMIENTOS")
         onCreate(db)
     }
+
+    fun insertEntrenamiento(entrenamiento: Entrenamiento) {
+
+        val db = writableDatabase
+
+        val contentValues = ContentValues().apply {
+            put(COLUMN_USER_ID, entrenamiento.userId)
+            put(COLUMN_FECHA, entrenamiento.fecha)
+            put(COLUMN_TIPO, entrenamiento.tipo)
+            put(COLUMN_DISTANCIA, entrenamiento.distancia)
+        }
+
+        db.insert(TABLE_ENTRENAMIENTOS, null, contentValues)
+
+        db.close()
+    }
+
+
+    fun selectAllEntrenamientos() {
+
+        val db = readableDatabase
+
+        // Columnas que deseas recuperar
+        val projection = arrayOf(
+            COLUMN_ENTRENAMIENTO_ID,
+            COLUMN_USER_ID,
+            COLUMN_FECHA,
+            COLUMN_TIPO,
+            COLUMN_DISTANCIA
+        )
+
+        // Ejecutar la consulta SELECT
+        val cursor = db.query(
+            TABLE_ENTRENAMIENTOS, // Nombre de la tabla
+            projection,           // Columnas que deseas recuperar
+            null,                 // Cláusula WHERE (en este caso, no hay ninguna)
+            null,                 // Argumentos para la cláusula WHERE
+            null,                 // GROUP BY (en este caso, no hay agrupación)
+            null,                 // HAVING (en este caso, no hay condición HAVING)
+            null                  // ORDER BY (en este caso, no hay ordenación)
+        )
+
+        // Iterar sobre el cursor para obtener los datos
+        while (cursor.moveToNext()) {
+            val entrenamientoId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ENTRENAMIENTO_ID))
+            val userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+            val fecha = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FECHA))
+            val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
+            val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
+
+            // Aquí puedes hacer lo que necesites con los datos, como mostrarlos en un TextView, por ejemplo
+            Log.d("Entrenamiento", "ID: $entrenamientoId, User ID: $userId, Fecha: $fecha, Tipo: $tipo, Distancia: $distancia")
+        }
+
+        // Cierra el cursor y la base de datos cuando hayas terminado
+        cursor.close()
+        db.close()
+    }
+
+
 
 }

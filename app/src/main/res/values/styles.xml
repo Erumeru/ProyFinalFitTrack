@@ -12,6 +12,7 @@
 
     <style name="CircleImageStyle">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item> <!-- Usar 50% hace que las esquinas sean redondeadas a la mitad del tamaño del ImageView, creando un círculo -->
+        <item name="cornerSize">50%</item>
     </style>
+
 </resources>

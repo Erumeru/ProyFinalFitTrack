@@ -44,54 +44,55 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             if(!compararPasswords(password,passwordConfirm)){
-                showAlert(this, "Error en el correo", "Ingresa un correo real.")
+                showAlert(this, "Error en la contraseña", "Las contraseñas no coinciden.")
                 return@setOnClickListener
             }
 
-            val dbHelper= DatabaseHelper(this)
-
-            val db=dbHelper.writableDatabase
-
-
-
-            val usuario=User(nombre,correo,password)
-            val contentValues=ContentValues().apply {
-                put("nombre",usuario.nombre)
-                put("correo",usuario.correo)
-                put("password",usuario.password)
-            }
-            val newRow= db.insert("users",null,contentValues)
+            ingresarUsuario(nombre,correo,password)
 
             selectAll()
 
         }
 
         tvLogin.setOnClickListener(){
+
             val login= Intent(this,activityLogin::class.java)
             startActivity(login)
         }
 
     }
 
-    fun ingresarUsuario(){
+    fun ingresarUsuario(nombre: String, correo: String, password: String){
+        val dbHelper= DatabaseHelper(this)
 
+        val db=dbHelper.writableDatabase
+
+
+        val usuario=User(nombre,correo,password)
+        val contentValues=ContentValues().apply {
+            put("nombre",usuario.nombre)
+            put("correo",usuario.correo)
+            put("password",usuario.password)
+        }
+        val newRow= db.insert("users",null,contentValues)
     }
 
     fun selectAll(){
         val dbHelper= DatabaseHelper(this)
 
         val db=dbHelper.writableDatabase
+
         //CONSULTA SELECT * FROM USERS
         val projection = arrayOf("id", "nombre", "correo", "password")
 
         val cursor = db.query(
-            "users",  // Nombre de la tabla
-            projection,  // Columnas que deseas consultar
-            null,        // Cláusula WHERE (null indica que no hay condiciones)
-            null,        // Valores para la cláusula WHERE (null indica que no hay condiciones)
-            null,        // GROUP BY
-            null,        // HAVING
-            null         // ORDER BY
+            "users",
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null
         )
 
 // Iterar sobre el cursor para obtener los datos
