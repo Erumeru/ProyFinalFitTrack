@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sesiones.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fondoGris"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:paddingTop="40dp"
+            android:id="@+id/linearRaiz"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fondoGris"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imLogo"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ejercicio_icon"
+                app:tint="@color/white"/>
+
+            <TextView
+                android:id="@+id/tvTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/sourcesanspro_bold"
+                android:text="Añada/Inicie su ejercicio"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingTop="70dp"
+                >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:id="@+id/tvCaminar"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/sourcesanspro_bold"
+                        android:text="Caminar"/>
+                    <TextView
+                        android:id="@+id/tvCorrer"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/sourcesanspro_bold"
+
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:text="Correr"/>
+                    <TextView
+                        android:id="@+id/tvBici"
+                        android:layout_width="90dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/sourcesanspro_bold"
+                        android:layout_height="90dp"
+                        android:textColor="@color/white"
+                        android:text="Bici"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="20dp"
+                    >
+                    <ImageView
+                        android:id="@+id/icon_caminar"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:scaleType="fitCenter"
+                        />
+                    <ImageView
+                        android:id="@+id/icon_correr"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        />
+                    <ImageView
+                        android:id="@+id/icon_bici"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:scaleType="fitCenter"
+                        />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTooltipDistancia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="Distancia"
+                    android:gravity="center"
+                    android:fontFamily="@font/sspro_regular"
+                    android:layout_marginTop="8dp"
+                    />
+                <EditText
+                    android:id="@+id/editTextDistancia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:hint=""
+                    android:inputType="numberDecimal"
+                    />
+            </LinearLayout>
+
+
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                >
+                <Button
+                    android:id="@+id/btnRegistrar"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/verdePrincipal"
+                    android:layout_marginTop="50dp"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/sspro_regular"
+                    android:textFontWeight="600"
+                    android:text="¡Registrar ejercicio!"
+                    android:textSize="16dp"
+                    />
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

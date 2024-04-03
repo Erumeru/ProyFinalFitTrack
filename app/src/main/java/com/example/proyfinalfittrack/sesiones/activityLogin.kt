@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.proyfinalfittrack.R
-import com.example.proyfinalfittrack.dashboard.dashboard
+import com.example.proyfinalfittrack.dashboard.Dashboard
 import com.example.proyfinalfittrack.db.DatabaseHelper
 
 class activityLogin : AppCompatActivity() {
@@ -35,10 +35,9 @@ class activityLogin : AppCompatActivity() {
                 val pass=findViewById<EditText>(R.id.editTextContra).text.toString()
 
             if(isUserCreated(correo,pass)) {
-                println("REGISTRADO")
                 val nombre = getUserNameByEmail(correo)
                 val id= getUserIdByEmail(correo)
-                val dashboard= Intent(this,dashboard::class.java)
+                val dashboard= Intent(this,Dashboard::class.java)
                 dashboard.putExtra("nombreUsuario", nombre)
                 dashboard.putExtra("idUsuario", id)
                 startActivity(dashboard)
