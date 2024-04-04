@@ -82,7 +82,7 @@
                     android:layout_margin="15dp"
                     >
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <TextView
                             android:id="@+id/tvDistancia"
@@ -100,7 +100,7 @@
                             android:id="@+id/linearCaminar"
                             app:layout_constraintTop_toBottomOf="@id/tvDistancia"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:gravity="center_vertical"
                             android:layout_height="wrap_content"
                             android:paddingLeft="13dp"
@@ -111,17 +111,21 @@
                                 android:src="@drawable/icon_caminar"
                                 />
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:id="@+id/linearCaminarDistanciaBarra"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="13dp"
+                                android:paddingEnd="13dp"
                                 android:orientation="vertical">
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/tvSumaCaminar"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="100km"
                                     android:textColor="@color/white"
                                     />
                                 <View
+                                    android:id="@+id/viewBarraCaminar"
                                     android:layout_width="100dp"
                                     android:background="@color/rosa"
                                     android:layout_height="2dp"/>
@@ -131,7 +135,7 @@
                             android:id="@+id/linearCorrer"
                             app:layout_constraintTop_toBottomOf="@id/linearCaminar"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:gravity="center_vertical"
                             android:layout_height="wrap_content"
                             android:paddingLeft="13dp"
@@ -142,17 +146,21 @@
                                 android:src="@drawable/icon_correr"
                                 />
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="13dp"
+                                android:paddingEnd="13dp"
+
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/tvSumaCorrer"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="50km"
                                     android:textColor="@color/white"
                                     />
                                 <View
+                                    android:id="@+id/viewBarraCorrer"
                                     android:layout_width="50dp"
                                     android:background="@color/azul"
                                     android:layout_height="2dp"/>
@@ -162,7 +170,7 @@
                             android:id="@+id/linearBici"
                             app:layout_constraintTop_toBottomOf="@id/linearCorrer"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:gravity="center_vertical"
                             android:layout_height="wrap_content"
                             android:paddingLeft="13dp"
@@ -174,17 +182,21 @@
                                 android:src="@drawable/icon_bici"
                                 />
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="13dp"
+                                android:paddingEnd="13dp"
+
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/tvSumaBici"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="100km"
                                     android:textColor="@color/white"
                                     />
                                 <View
+                                    android:id="@+id/viewBarraBici"
                                     android:layout_width="100dp"
                                     android:background="@color/verdePrincipal"
                                     android:layout_height="2dp"/>

@@ -2,10 +2,12 @@ package com.example.proyfinalfittrack.db
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.proyfinalfittrack.entities.Entrenamiento
+import java.util.Calendar
 
 class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAME,null,DATABASE_VERSION){
 
@@ -73,6 +75,39 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
         db.close()
     }
+
+    fun getEntremaientosUnMesAtras(idUser: Int): List<Entrenamiento> {
+        val entrenamientosList = mutableListOf<Entrenamiento>()
+
+        val currentTimeMillis = System.currentTimeMillis()
+
+        // Calcular la fecha de hace un mes
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = currentTimeMillis
+        calendar.add(Calendar.MONTH, -1)
+        val oneMonthAgo = calendar.timeInMillis
+
+
+        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= $oneMonthAgo AND $COLUMN_USER_ID = $idUser"
+
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()) {
+            val userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+            val fecha = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FECHA))
+            val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
+            val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
+
+            val entrenamiento = Entrenamiento(userId, fecha, tipo, distancia)
+            entrenamientosList.add(entrenamiento)
+        }
+
+        cursor.close()
+        db.close()
+        return entrenamientosList
+    }
+
 
 
     fun selectAllEntrenamientos() {

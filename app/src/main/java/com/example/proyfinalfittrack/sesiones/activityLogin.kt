@@ -120,5 +120,4 @@ class activityLogin : AppCompatActivity() {
         return userId
     }
 
-
 }

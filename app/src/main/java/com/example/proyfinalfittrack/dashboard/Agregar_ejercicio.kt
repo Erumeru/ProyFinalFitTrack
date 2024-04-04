@@ -1,6 +1,7 @@
 package com.example.proyfinalfittrack.dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -39,7 +40,6 @@ class Agregar_ejercicio : AppCompatActivity() {
         // configuraciones de variables
         cargarTitulosYActividades()
         cargarGifs()
-
 
         imgCaminar.setOnClickListener(){
             if(tvCaminar.currentTextColor!=colorSeleccionado) {
@@ -84,6 +84,11 @@ class Agregar_ejercicio : AppCompatActivity() {
                 showAlert(this, "Error en el tipo\nde entrenamiento", "Ingrese un tipo de entrenamiento.")
                 return@setOnClickListener
             }
+            if(editTextDistancia.text.isEmpty() || editTextDistancia.text.toString().equals(".") || editTextDistancia.text.toString().toFloat()<=0){
+                showAlert(this, "Error en la distancia", "Ingrese una distancia.")
+                return@setOnClickListener
+            }
+
             println(editTextDistancia.text.toString())
                dbHelper= DatabaseHelper(this)
                val currentTimeMillis = System.currentTimeMillis()
@@ -91,8 +96,13 @@ class Agregar_ejercicio : AppCompatActivity() {
                dbHelper.insertEntrenamiento(entrenamiento)
                dbHelper.selectAllEntrenamientos()
 
-        }
+            val dashboard= Intent(this,Dashboard::class.java)
+            dashboard.putExtra("nombreUsuario", intent.getSerializableExtra("nombreUsuario") as String)
+            dashboard.putExtra("idUsuario", idUser)
+            startActivity(dashboard)
 
+
+        }
 
     }
 
