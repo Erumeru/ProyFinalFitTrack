@@ -72,7 +72,8 @@
                 android:paddingTop="15dp"
                 android:paddingLeft="15dp"
                 />
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewDistancias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/tvDashboard"
@@ -80,6 +81,7 @@
                     app:cardCornerRadius="16dp"
                     app:cardBackgroundColor="@color/grisClaro"
                     android:layout_margin="15dp"
+                    app:strokeColor="@color/transparente"
                     >
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -206,7 +208,338 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </androidx.cardview.widget.CardView>
+                </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvConstancia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sspro_regular"
+                app:layout_constraintTop_toBottomOf="@id/cardViewDistancias"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Constancia"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                android:paddingTop="15dp"
+                android:paddingLeft="15dp"
+                />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_margin="15dp"
+                app:cardBackgroundColor="@color/fondoGris"
+                app:strokeColor="@color/grisClaro"
+                app:strokeWidth="2dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvConstancia"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal"
+                    android:weightSum="7"
+                    android:layout_height="wrap_content">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvDomingo"
+                            android:id="@+id/domingoActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="100dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvDomingo"
+                            android:id="@+id/domingoSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="50dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvDomingo"
+                            app:layout_constraintTop_toBottomOf="@id/domingoActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="D"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                            <com.google.android.material.card.MaterialCardView
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/tvLunes"
+                                android:id="@+id/lunesActivo"
+                                android:layout_marginStart="-5dp"
+                                android:layout_width="10dp"
+                                android:layout_height="30dp"
+                                app:strokeColor="@color/transparente"
+                                app:cardBackgroundColor="@color/verdePrincipal"
+                                />
+                            <com.google.android.material.card.MaterialCardView
+
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintBottom_toTopOf="@id/tvLunes"
+                                android:id="@+id/lunesSombra"
+                                android:layout_marginStart="5dp"
+                                android:layout_width="10dp"
+                                android:layout_height="30dp"
+                                app:strokeColor="@color/transparente"
+                                app:cardBackgroundColor="@color/verdePrincipalSombra"
+                                />
+                        <TextView
+                            android:id="@+id/tvLunes"
+                            app:layout_constraintTop_toBottomOf="@id/lunesActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="L"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvMartes"
+                            android:id="@+id/martesActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="30dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvMartes"
+                            android:id="@+id/martesSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="50dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvMartes"
+                            app:layout_constraintTop_toBottomOf="@id/martesActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="M"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvMiercoles"
+                            android:id="@+id/miercolesActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="20dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvMiercoles"
+                            android:id="@+id/miercolesSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="42dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvMiercoles"
+                            app:layout_constraintTop_toBottomOf="@id/miercolesActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="X"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvJueves"
+                            android:id="@+id/juevesActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="45dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvJueves"
+                            android:id="@+id/juevesSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="12dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvJueves"
+                            app:layout_constraintTop_toBottomOf="@id/juevesActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="J"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvViernes"
+                            android:id="@+id/viernesActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="42dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvViernes"
+                            android:id="@+id/viernesSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="40dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvViernes"
+                            app:layout_constraintTop_toBottomOf="@id/viernesActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="V"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_weight="1"
+                        android:layout_gravity="bottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvSabado"
+                            android:id="@+id/sabadoActivo"
+                            android:layout_marginStart="-5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="37dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipal"
+                            />
+                        <com.google.android.material.card.MaterialCardView
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toTopOf="@id/tvSabado"
+                            android:id="@+id/sabadoSombra"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="10dp"
+                            android:layout_height="67dp"
+                            app:strokeColor="@color/transparente"
+                            app:cardBackgroundColor="@color/verdePrincipalSombra"
+                            />
+                        <TextView
+                            android:id="@+id/tvSabado"
+                            app:layout_constraintTop_toBottomOf="@id/sabadoActivo"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="S"
+                            android:textColor="@color/white"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
