@@ -208,8 +208,13 @@ class Dashboard : AppCompatActivity() {
          * para eliminar los registros 30 dias despues
          * del primer registro
          */
-        //POR AHORA SOLO MANEJA UNA DIFERENCIA DE 1 DIA PERO SE PUEDE CALAR CAMBIANDO REGISTROS EN LA BASE DE DATOS
-        calendar.add(Calendar.DAY_OF_MONTH, 1)
+        //POR AHORA SOLO MANEJA UNA DIFERENCIA DE 2 DIA PERO SE PUEDE CALAR CAMBIANDO REGISTROS EN LA BASE DE DATOS
+        //BASICAMENTE SIGNIFICA
+        //EMPEZAMOS DESDE EL PRIMER ENTRENAMIENTO (MAS VIEJO)
+        //CONTAMOS X DIAS ADELANTE
+        //LA LISTA NUEVA EQUIVALE A LOS ENTRENAMIETNOS X DIAS DESPUES DEL MAS VIEJO
+        // LA LISTA USADA PARA ESTE CALCULO ES LA DE DIAS ATRAS
+        calendar.add(Calendar.DAY_OF_MONTH, 2)
         val diasRestados = calendar.timeInMillis
 
         println("diasrestados $diasRestados")
@@ -229,10 +234,10 @@ class Dashboard : AppCompatActivity() {
     fun cargarEntrenamientosDiasAtras(dias: Int){
         val idUser=intent.getSerializableExtra("idUsuario") as Int
         listaEntDiasAtras=dbHelper.getEntremaientosXDiasAtras(idUser,dias)
-//        println("--ENTRENAMIENTOS POR DIAS ATRAS--")
-//        listaEntDiasAtras.forEach{ent ->
-//            println("Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha,"dd/MM/yyyy HH:mm:ss")}, ")
-//        }
+        println("--ENTRENAMIENTOS POR DIAS ATRAS METODO CARGARENTRENAMIENTOSDIASATRAS--")
+        listaEntDiasAtras.forEach{ent ->
+            println("Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha,"dd/MM/yyyy HH:mm:ss")}, ")
+        }
 
     }
 
@@ -292,7 +297,7 @@ class Dashboard : AppCompatActivity() {
         listaEnt=dbHelper.getEntremaientosUnMesAtras(idUser)
 
         listaEnt.forEach{ent ->
-            println("Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha,"dd/MM/yyyy HH:mm:ss")}, ")
+            println("Cargar entrenamientos Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha,"dd/MM/yyyy HH:mm:ss")}, ")
        }
     }
 
