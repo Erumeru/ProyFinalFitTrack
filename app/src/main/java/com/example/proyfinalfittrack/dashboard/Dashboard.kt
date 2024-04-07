@@ -201,20 +201,13 @@ class Dashboard : AppCompatActivity() {
             return emptyList()
         }
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = lista.first().fecha
+        calendar.timeInMillis = lista.last().fecha
 
-        /**
-         * se calcula fecha de los primeros 30 dias
-         * para eliminar los registros 30 dias despues
-         * del primer registro
-         */
-        //POR AHORA SOLO MANEJA UNA DIFERENCIA DE 2 DIA PERO SE PUEDE CALAR CAMBIANDO REGISTROS EN LA BASE DE DATOS
-        //BASICAMENTE SIGNIFICA
-        //EMPEZAMOS DESDE EL PRIMER ENTRENAMIENTO (MAS VIEJO)
-        //CONTAMOS X DIAS ADELANTE
-        //LA LISTA NUEVA EQUIVALE A LOS ENTRENAMIETNOS X DIAS DESPUES DEL MAS VIEJO
-        // LA LISTA USADA PARA ESTE CALCULO ES LA DE DIAS ATRAS
-        calendar.add(Calendar.DAY_OF_MONTH, 2)
+
+        //SE OBTIENE LA FECHA DEL EJERCICIO MAS NUEVO Y SE LE RESTAN X DIAS
+        //LA LISTA DE X DIAS EN ADELANTE (NUEVOS) EQUIVALEN A CONSTANCIA VERDE FUERTE
+        //LA LISTA X DIAS ATRAS (VIEJOS) EQUIVALEN A VERDE OSCURO (SOMBRA)
+        calendar.add(Calendar.DAY_OF_MONTH, -2)
         val diasRestados = calendar.timeInMillis
 
         println("diasrestados $diasRestados")
