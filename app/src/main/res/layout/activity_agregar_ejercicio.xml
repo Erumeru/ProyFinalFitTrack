@@ -155,19 +155,33 @@
                 >
                 <Button
                     android:id="@+id/btnRegistrar"
-                    android:layout_width="300dp"
+                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/verdePrincipal"
                     android:layout_marginTop="50dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_gravity="center"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/btnGps"
                     app:layout_constraintStart_toStartOf="parent"
                     android:fontFamily="@font/sspro_regular"
                     android:textFontWeight="600"
                     android:text="¡Registrar ejercicio!"
                     android:textSize="16dp"
                     />
-
+                <Button
+                    android:id="@+id/btnGps"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/verdePrincipal"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:fontFamily="@font/sspro_regular"
+                    android:textFontWeight="600"
+                    android:text="Gps Off"
+                    android:textSize="16dp"
+                    />
 
 
 

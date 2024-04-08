@@ -158,12 +158,12 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         // Ejecutar la consulta SELECT
         val cursor = db.query(
             TABLE_ENTRENAMIENTOS, // Nombre de la tabla
-            projection,           // Columnas que deseas recuperar
-            null,                 // Cláusula WHERE (en este caso, no hay ninguna)
-            null,                 // Argumentos para la cláusula WHERE
-            null,                 // GROUP BY (en este caso, no hay agrupación)
-            null,                 // HAVING (en este caso, no hay condición HAVING)
-            null                  // ORDER BY (en este caso, no hay ordenación)
+            projection,           // Columnas
+            null,                 // Cláusula WHERE
+            null,                 // Argumentos para WHERE
+            null,                 // GROUP BY
+            null,                 // HAVING
+            null                  // ORDER BY
         )
 
         // Iterar sobre el cursor para obtener los datos
@@ -174,11 +174,9 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
             val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
             val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
 
-            // Aquí puedes hacer lo que necesites con los datos, como mostrarlos en un TextView, por ejemplo
-            Log.d("Entrenamiento", "ID: $entrenamientoId, User ID: $userId, Fecha: $fecha, Tipo: $tipo, Distancia: $distancia")
         }
 
-        // Cierra el cursor y la base de datos cuando hayas terminado
+
         cursor.close()
         db.close()
     }

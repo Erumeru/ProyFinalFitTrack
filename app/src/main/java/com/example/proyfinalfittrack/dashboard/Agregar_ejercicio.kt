@@ -1,8 +1,13 @@
 package com.example.proyfinalfittrack.dashboard
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputFilter
@@ -11,6 +16,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.proyfinalfittrack.R
 import com.example.proyfinalfittrack.db.DatabaseHelper
@@ -27,8 +34,14 @@ class Agregar_ejercicio : AppCompatActivity() {
     private lateinit var tvBici: TextView
 
     private lateinit var btnRegister: Button
+    private lateinit var btnGps: Button
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var editTextDistancia: EditText
+
+    private var lastLocation: Location? = null
+    private var distanciaTotalGps: Float = 0.0f
+    private lateinit var locationManager: LocationManager
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +117,59 @@ class Agregar_ejercicio : AppCompatActivity() {
 
         }
 
+        btnGps.setOnClickListener(){
+            editTextDistancia.isEnabled=!(editTextDistancia.isEnabled)
+            if(!editTextDistancia.isEnabled){
+                btnGps.text = "Gps On"
+                val LOCATION_PERMISSION_REQUEST_CODE = 1001
+
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    // La aplicación tiene el permiso necesario
+                    // Realiza la operación que requiere el permiso
+                    locationManager  = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+                } else {
+                    // El permiso no está otorgado, solicítalo al usuario
+                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+                }
+            }else{
+                locationManager.removeUpdates(locationListener)
+                btnGps.text = "Gps Off"
+            }
+
+        }
+
     }
+
+    override fun onBackPressed() {
+
+        if (::locationManager.isInitialized) {
+            locationManager.removeUpdates(locationListener)
+        }
+        super.onBackPressed()
+    }
+
+    val locationListener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            // Calcular distancia y velocidad
+            if(lastLocation!=null){
+                val distancia=lastLocation!!.distanceTo(location)
+                distanciaTotalGps+=distancia
+                lastLocation=location
+                println("distancia: $distancia,  distanciatotal: ${distanciaTotalGps/1000.0f} km")
+                editTextDistancia.setText((distanciaTotalGps/1000.0f).toString())
+            }else{
+                //si no hay localizacion antes, actualizar
+                lastLocation=location
+            }
+            // Actualizar UI con la nueva ubicación, distancia y velocidad
+        }
+
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        }
+    }
+
 
 
     fun showAlert(context: Context, title: String, message: String) {
@@ -136,9 +201,10 @@ class Agregar_ejercicio : AppCompatActivity() {
         imgBici=findViewById(R.id.icon_bici)
         //btnregistrar
         btnRegister=findViewById(R.id.btnRegistrar)
+        //btnGps
+        btnGps=findViewById(R.id.btnGps)
         //EditText
         editTextDistancia=findViewById(R.id.editTextDistancia)
-
 
         tvCaminar=findViewById(R.id.tvCaminar)
         tvCorrer=findViewById(R.id.tvCorrer)
