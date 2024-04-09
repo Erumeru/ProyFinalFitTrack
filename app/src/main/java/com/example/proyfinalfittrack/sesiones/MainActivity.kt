@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.proyfinalfittrack.R
+import com.example.proyfinalfittrack.dashboard.Dashboard
 import com.example.proyfinalfittrack.db.DatabaseHelper
 import com.example.proyfinalfittrack.entities.User
 
@@ -43,7 +44,17 @@ class MainActivity : AppCompatActivity() {
                 showAlert(this, "Error en el correo", "El correo ya ha sido registrado.")
                 return@setOnClickListener
             }
-            if(!compararPasswords(password,passwordConfirm)){
+            if (isNombreInvalido(nombre)) {
+                showAlert(this, "Error en el nombre", "El nombre ingresado no es válido.")
+                return@setOnClickListener
+            }
+
+            if (!isContraseñaValida(password)) {
+                showAlert(this, "Error en la contraseña", "La contraseña debe tener al menos 6 caracteres y contener al menos una letra mayúscula.")
+                return@setOnClickListener
+            }
+
+            if (!compararPasswords(password, passwordConfirm)) {
                 showAlert(this, "Error en la contraseña", "Las contraseñas no coinciden.")
                 return@setOnClickListener
             }
@@ -75,6 +86,9 @@ class MainActivity : AppCompatActivity() {
             put("password",usuario.password)
         }
         val newRow= db.insert("users",null,contentValues)
+        db.close()
+
+        iniciarSesion(correo, password)
     }
 
     fun selectAll(){
@@ -147,6 +161,29 @@ class MainActivity : AppCompatActivity() {
         db.close()
 
         return count > 0
+    }
+
+    fun isNombreInvalido(nombre: String): Boolean {
+        val regex = Regex("[^a-zA-Z ]")
+        return regex.containsMatchIn(nombre)
+    }
+
+    fun isContraseñaValida(password: String): Boolean {
+
+        if (password.length < 6) {
+            return false
+        }
+
+        val tieneMayuscula = password.any { it.isUpperCase() }
+
+        return tieneMayuscula
+    }
+
+    fun iniciarSesion(correo: String, password: String) {
+
+
+        val intent = Intent(this, activityLogin::class.java)
+        startActivity(intent)
     }
 
 }
