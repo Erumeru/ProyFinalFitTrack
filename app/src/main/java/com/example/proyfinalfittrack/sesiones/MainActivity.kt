@@ -180,8 +180,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun iniciarSesion(correo: String, password: String) {
-
-
         val intent = Intent(this, activityLogin::class.java)
         startActivity(intent)
     }
