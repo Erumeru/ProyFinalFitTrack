@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="km_format">%s</string>
+    <string name="dif_format">%s</string>
+</resources>

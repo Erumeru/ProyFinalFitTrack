@@ -295,7 +295,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/domingoActivo" />
@@ -305,7 +305,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF 0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosDomingo" />
@@ -358,7 +358,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/lunesActivo" />
@@ -368,7 +368,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosLunes" />
@@ -421,7 +421,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/martesActivo" />
@@ -431,7 +431,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosMartes" />
@@ -484,7 +484,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/miercolesActivo" />
@@ -494,7 +494,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosMiercoles" />
@@ -546,7 +546,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/juevesActivo" />
@@ -556,7 +556,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosJueves" />
@@ -608,7 +608,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/viernesActivo" />
@@ -618,7 +618,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosViernes" />
@@ -670,7 +670,7 @@
                             android:layout_height="18dp"
                             android:layout_marginStart="13dp"
                             android:layout_marginTop="22dp"
-                            android:text="KM 0"
+                            android:text="k"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/sabadoActivo" />
@@ -680,7 +680,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="13dp"
-                            android:text="DF +0"
+                            android:text="0"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvKilometrosSabado" />
