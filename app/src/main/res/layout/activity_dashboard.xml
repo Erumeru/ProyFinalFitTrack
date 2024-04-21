@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/fondoGris"
     tools:context=".dashboard.Dashboard">
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -261,6 +266,8 @@
                             app:strokeColor="@color/transparente"
                             app:cardBackgroundColor="@color/verdePrincipal"
                             />
+
+
                         <com.google.android.material.card.MaterialCardView
 
                             app:layout_constraintStart_toStartOf="parent"
@@ -282,6 +289,26 @@
                             android:layout_height="wrap_content"
                             android:text="D"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosDomingo"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/domingoActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaDomingo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosDomingo" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -303,6 +330,7 @@
                                 app:strokeColor="@color/transparente"
                                 app:cardBackgroundColor="@color/verdePrincipal"
                                 />
+
                             <com.google.android.material.card.MaterialCardView
 
                                 app:layout_constraintStart_toStartOf="parent"
@@ -324,6 +352,26 @@
                             android:layout_height="wrap_content"
                             android:text="L"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosLunes"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/lunesActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaLunes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosLunes" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -367,6 +415,26 @@
                             android:layout_height="wrap_content"
                             android:text="M"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosMartes"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/martesActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaMartes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosMartes" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -410,6 +478,26 @@
                             android:layout_height="wrap_content"
                             android:text="X"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosMiercoles"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/miercolesActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaMiercoles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosMiercoles" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -452,6 +540,26 @@
                             android:layout_height="wrap_content"
                             android:text="J"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosJueves"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/juevesActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaJueves"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosJueves" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -494,6 +602,26 @@
                             android:layout_height="wrap_content"
                             android:text="V"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosViernes"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/viernesActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaViernes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosViernes" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -536,6 +664,26 @@
                             android:layout_height="wrap_content"
                             android:text="S"
                             android:textColor="@color/white"/>
+                        <TextView
+                            android:id="@+id/tvKilometrosSabado"
+                            android:layout_width="46dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="13dp"
+                            android:layout_marginTop="22dp"
+                            android:text="KM 0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/sabadoActivo" />
+
+                        <TextView
+                            android:id="@+id/tvDiferenciaSabado"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="13dp"
+                            android:text="DF +0"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvKilometrosSabado" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
@@ -548,7 +696,8 @@
             android:layout_height="match_parent">
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="800dp"
                 android:layout_alignParentBottom="true"
                 android:background="@color/grisClaro"
                 >
@@ -561,7 +710,7 @@
                     <ImageView
                         android:id="@+id/agregarEjercicio"
                         android:layout_width="30dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         app:tint="@color/white"
                         android:src="@drawable/btn_mas"/>
 
@@ -569,6 +718,7 @@
             </com.google.android.material.bottomnavigation.BottomNavigationView>
         </RelativeLayout>
     </FrameLayout>
+    </ScrollView>
 
 
 

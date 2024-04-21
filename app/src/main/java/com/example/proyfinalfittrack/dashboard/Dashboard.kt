@@ -38,6 +38,9 @@ class Dashboard : AppCompatActivity() {
     private lateinit var viewBarraCorrer: View
     private lateinit var viewBarraBici: View
 
+    private val listaTextViewsKilometros = mutableListOf<TextView>()
+    private val listaTextViewsDiferencia = mutableListOf<TextView>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -55,6 +58,8 @@ class Dashboard : AppCompatActivity() {
         cargarTextViews()
         cargarEntrenamientos()
         cargarEntrenamientosDiasAtras(60)
+        inicializarListasTextViews()
+
 
 
         val listaParaPrincipalConstancia = eliminarUltimos30DiasListaEntrenamientos(listaEntDiasAtras)
@@ -87,6 +92,8 @@ class Dashboard : AppCompatActivity() {
          //   dbHelper.insertEntrenamiento(entrenamiento)
           //  dbHelper.selectAllEntrenamientos()
         }
+
+        calcularYActualizarKilometrosDiferenciasSemana()
     }
 
     fun configurarConstancia(listaCompleta:List<Entrenamiento>,lista30DiasMenos:List<Entrenamiento>){
@@ -195,6 +202,23 @@ class Dashboard : AppCompatActivity() {
         }
     }
 
+    private fun cargarEntrenamientosDiaAnterior(dia: Int): List<Entrenamiento> {
+        val idUser = intent.getSerializableExtra("idUsuario") as Int
+        // Calcula la fecha del día anterior al especificado
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, -dia - 1) // Resta un día adicional
+        val fechaDiaAnterior = calendar.timeInMillis
+
+        // Carga los entrenamientos del día anterior al especificado
+        val listaEntrenamientosDiaAnterior = dbHelper.getEntrenamientosPorFecha(idUser, fechaDiaAnterior)
+        println("--ENTRENAMIENTOS DEL DÍA ANTERIOR AL $dia--")
+        listaEntrenamientosDiaAnterior.forEach { ent ->
+            println("Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha, "dd/MM/yyyy HH:mm:ss")}, ")
+        }
+        return listaEntrenamientosDiaAnterior
+    }
+
+
     fun eliminarUltimos30DiasListaEntrenamientos(lista:List<Entrenamiento>): List<Entrenamiento>{
 
         if(lista.isEmpty()){
@@ -294,10 +318,94 @@ class Dashboard : AppCompatActivity() {
        }
     }
 
+    fun cargarEntrenamientosDia(dia: Int): List<Entrenamiento> {
+        val idUser = intent.getSerializableExtra("idUsuario") as Int
+        // Calcula la fecha del día especificado
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, -dia)
+        val fechaDia = calendar.timeInMillis
+
+        // Carga los entrenamientos del día especificado
+        val listaEntDiasAtras = dbHelper.getEntrenamientosPorFecha(idUser, fechaDia)
+        println("--ENTRENAMIENTOS DEL DÍA $dia--")
+        listaEntDiasAtras.forEach { ent ->
+            println("Tipo: ${ent.tipo}, Distancia: ${ent.distancia}, Fecha: ${convertirMillisAFecha(ent.fecha, "dd/MM/yyyy HH:mm:ss")}, ")
+        }
+        return listaEntDiasAtras
+    }
+
+
+
     fun convertirMillisAFecha(millis: Long, formato: String): String {
         val dateFormat = SimpleDateFormat(formato, Locale.getDefault())
         val fecha = Date(millis)
         return dateFormat.format(fecha)
     }
+
+
+    private fun inicializarListasTextViews() {
+        listaTextViewsKilometros.apply {
+            add(findViewById(R.id.tvKilometrosDomingo))
+            add(findViewById(R.id.tvKilometrosLunes))
+            add(findViewById(R.id.tvKilometrosMartes))
+            add(findViewById(R.id.tvKilometrosMiercoles))
+            add(findViewById(R.id.tvKilometrosJueves))
+            add(findViewById(R.id.tvKilometrosViernes))
+            add(findViewById(R.id.tvKilometrosSabado))
+        }
+
+        listaTextViewsDiferencia.apply {
+            add(findViewById(R.id.tvDiferenciaDomingo))
+            add(findViewById(R.id.tvDiferenciaLunes))
+            add(findViewById(R.id.tvDiferenciaMartes))
+            add(findViewById(R.id.tvDiferenciaMiercoles))
+            add(findViewById(R.id.tvDiferenciaJueves))
+            add(findViewById(R.id.tvDiferenciaViernes))
+            add(findViewById(R.id.tvDiferenciaSabado))
+        }
+
+    }
+
+    private fun calcularYActualizarKilometrosDiferenciasSemana() {
+        for (i in Calendar.SUNDAY..Calendar.SATURDAY) {
+            // Obtener la lista de entrenamientos del día actual y del día anterior
+            val listaEntrenamientosDiaActual = obtenerEntrenamientosDia(i)
+            val listaEntrenamientosDiaAnterior = obtenerEntrenamientosDiaAnterior(i)
+
+            // Calcular los kilómetros recorridos en el día actual y en el día anterior
+            val kilometrosDiaActual = calcularKilometrosRecorridos(listaEntrenamientosDiaActual)
+            val kilometrosDiaAnterior = calcularKilometrosRecorridos(listaEntrenamientosDiaAnterior)
+
+            // Calcular la diferencia entre los kilómetros del día actual y los del día anterior
+            val diferenciaKilometros = kilometrosDiaActual - kilometrosDiaAnterior
+
+            // Actualizar los TextViews correspondientes al día actual
+            listaTextViewsKilometros[i - Calendar.SUNDAY].text = "KM $kilometrosDiaActual"
+            listaTextViewsDiferencia[i - Calendar.SUNDAY].text = "DF $diferenciaKilometros"
+        }
+    }
+
+    private fun obtenerEntrenamientosDia(dia: Int): List<Entrenamiento> {
+        // Aquí llama a tu método existente para cargar los entrenamientos del día
+        return cargarEntrenamientosDia(dia)
+    }
+
+    // Función para obtener los entrenamientos del día anterior al especificado
+    private fun obtenerEntrenamientosDiaAnterior(dia: Int): List<Entrenamiento> {
+        // Aquí llama a tu método existente para cargar los entrenamientos del día anterior
+        return cargarEntrenamientosDiaAnterior(dia)
+    }
+
+    // Función para calcular los kilómetros recorridos en una lista de entrenamientos
+    private fun calcularKilometrosRecorridos(entrenamientos: List<Entrenamiento>): Float {
+        var distanciaTotal = 0.0f
+        // Suma las distancias de todos los entrenamientos en la lista
+        for (entrenamiento in entrenamientos) {
+            distanciaTotal += entrenamiento.distancia
+        }
+        return distanciaTotal
+    }
+
+
 
 }
