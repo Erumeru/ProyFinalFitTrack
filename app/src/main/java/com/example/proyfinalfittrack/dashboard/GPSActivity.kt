@@ -1,8 +1,10 @@
 package com.example.proyfinalfittrack.dashboard
 
-import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -12,24 +14,23 @@ import androidx.core.app.ActivityCompat
 import com.example.proyfinalfittrack.R
 import com.example.proyfinalfittrack.db.DatabaseHelper
 import com.example.proyfinalfittrack.entities.Entrenamiento
-import java.util.*
 
-class GPSActivity : AppCompatActivity() {
+class GPSActivity : AppCompatActivity(), LocationListener {
 
     private lateinit var db: DatabaseHelper
     private lateinit var txtDistanciaRecorrida: TextView
     private lateinit var txtTiempoTranscurrido: TextView
     private lateinit var btnIniciarTerminar: Button
+    private lateinit var locationManager: LocationManager
     private var isTracking: Boolean = false
     private var startTimeMillis: Long = 0L
-    private var lastLocation: Location? = null
     private var distanciaRecorrida: Float = 0f
     private var idUser: Int = -1
+    private var lastLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gps)
-
 
         idUser = intent.getSerializableExtra("idUsuario") as? Int ?: -1
 
@@ -48,24 +49,24 @@ class GPSActivity : AppCompatActivity() {
                 btnIniciarTerminar.text = "Iniciar"
             }
         }
+
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     private fun iniciarSeguimiento() {
-
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION
                 ),
                 PERMISSIONS_REQUEST_LOCATION
             )
@@ -77,17 +78,18 @@ class GPSActivity : AppCompatActivity() {
         distanciaRecorrida = 0f
         actualizarUI()
 
-
-        val timer = Timer()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                actualizarUbicacionSimulada()
-            }
-        }, 0, 1000)
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            1000L,
+            0f,
+            this
+        )
     }
 
     private fun detenerSeguimiento() {
         isTracking = false
+        locationManager.removeUpdates(this)
+
         val endTimeMillis = System.currentTimeMillis()
         val tiempoTranscurrido = endTimeMillis - startTimeMillis
         val velocidadPromedio = calcularVelocidadPromedio(distanciaRecorrida, tiempoTranscurrido)
@@ -103,26 +105,6 @@ class GPSActivity : AppCompatActivity() {
             mostrarToast("No se pudo obtener el ID del usuario. Entrenamiento no guardado.")
         }
         actualizarUI()
-    }
-
-    private fun actualizarUbicacionSimulada() {
-        // Simulamos una actualización de ubicación cada 5 segundos
-        val random = Random()
-        val latitud = 19.12345 + random.nextDouble() / 100
-        val longitud = -99.54321 + random.nextDouble() / 100
-
-        val nuevaUbicacion = Location("Simulada")
-        nuevaUbicacion.latitude = latitud
-        nuevaUbicacion.longitude = longitud
-
-        if (lastLocation != null) {
-            distanciaRecorrida += lastLocation!!.distanceTo(nuevaUbicacion)
-        }
-
-        lastLocation = nuevaUbicacion
-        runOnUiThread {
-            actualizarUI()
-        }
     }
 
     private fun calcularVelocidadPromedio(distancia: Float, tiempoMillis: Long): Float {
@@ -158,6 +140,15 @@ class GPSActivity : AppCompatActivity() {
 
     private fun mostrarToast(mensaje: String) {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLocationChanged(location: Location) {
+        if (lastLocation != null) {
+            distanciaRecorrida += lastLocation!!.distanceTo(location)
+        }
+
+        lastLocation = location
+        actualizarUI()
     }
 
     companion object {
