@@ -1,18 +1,19 @@
 package com.example.proyfinalfittrack.dashboard
 
 import android.content.Intent
-import android.database.Cursor
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.SimpleCursorAdapter
+
 import android.widget.TextView
 import com.example.proyfinalfittrack.R
 import com.example.proyfinalfittrack.db.DatabaseHelper
 import com.example.proyfinalfittrack.entities.Entrenamiento
-import com.example.proyfinalfittrack.sesiones.activityLogin
+
 import com.google.android.material.card.MaterialCardView
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -25,6 +26,7 @@ class Dashboard : AppCompatActivity() {
     private lateinit var tvNombre : TextView
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var agregarEjercicio: ImageView
+    private lateinit var agregarGPS: Button
     private lateinit var listaEnt: List<Entrenamiento>
 
     private lateinit var listaEntDiasAtras: List<Entrenamiento>
@@ -47,6 +49,7 @@ class Dashboard : AppCompatActivity() {
         tvNombre=findViewById(R.id.tvNombre)
         nombreUsuario=intent.getSerializableExtra("nombreUsuario") as String
         agregarEjercicio=findViewById(R.id.agregarEjercicio)
+        agregarGPS=findViewById(R.id.agregarGPS)
         linearCaminar=findViewById(R.id.linearCaminarDistanciaBarra)
         viewBarraCaminar=findViewById(R.id.viewBarraCaminar)
         viewBarraCorrer=findViewById(R.id.viewBarraCorrer)
@@ -93,6 +96,14 @@ class Dashboard : AppCompatActivity() {
          //   var entrenamiento=Entrenamiento(idUser,currentTimeMillis,"caminata",100f)
          //   dbHelper.insertEntrenamiento(entrenamiento)
           //  dbHelper.selectAllEntrenamientos()
+        }
+
+        agregarGPS.setOnClickListener(){
+            val agregar= Intent(this, GPSActivity::class.java)
+            agregar.putExtra("idUsuario",intent.getSerializableExtra("idUsuario") as Int)
+            agregar.putExtra("nombreUsuario", intent.getSerializableExtra("nombreUsuario") as String)
+            startActivity(agregar)
+
         }
 
 
@@ -355,7 +366,6 @@ class Dashboard : AppCompatActivity() {
        }
     }
 
-
     private fun calcularDiferenciaSemanaAnterior(): Float {
         val idUser=intent.getSerializableExtra("idUsuario") as Int
         val listaEntrenamientosSemanaAnterior = dbHelper.getEntremaientosXDiasAtras(idUser, 7) // Obtener entrenamientos de la semana anterior
@@ -364,21 +374,9 @@ class Dashboard : AppCompatActivity() {
         return distanciaTotalEstaSemana - distanciaSemanaAnterior
     }
 
-
-
-
     fun convertirMillisAFecha(millis: Long, formato: String): String {
         val dateFormat = SimpleDateFormat(formato, Locale.getDefault())
         val fecha = Date(millis)
         return dateFormat.format(fecha)
     }
-
-
-
-
-
-
-
-
-
 }

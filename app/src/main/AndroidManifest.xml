@@ -15,8 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyFinalFitTrack"
         tools:targetApi="31">
+
         <activity
             android:name=".dashboard.Agregar_ejercicio"
+            android:exported="false" />
+
+        <activity android:name=".dashboard.GPSActivity"
             android:exported="false" />
         <activity
             android:name=".dashboard.Dashboard"

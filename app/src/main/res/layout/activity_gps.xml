@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- TextView para mostrar la distancia recorrida -->
+    <TextView
+        android:id="@+id/txtDistanciaRecorrida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distancia: 0m"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp" />
+
+    <!-- TextView para mostrar el tiempo transcurrido -->
+    <TextView
+        android:id="@+id/txtTiempoTranscurrido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tiempo: 0s"
+        android:layout_below="@id/txtDistanciaRecorrida"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <!-- Botón para iniciar/terminar el registro automático -->
+    <Button
+        android:id="@+id/btnIniciarTerminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Iniciar"
+        android:layout_below="@id/txtTiempoTranscurrido"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>
+

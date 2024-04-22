@@ -103,11 +103,11 @@ class Agregar_ejercicio : AppCompatActivity() {
             }
 
             println(editTextDistancia.text.toString())
-               dbHelper= DatabaseHelper(this)
-               val currentTimeMillis = System.currentTimeMillis()
-               var entrenamiento= Entrenamiento(idUser,currentTimeMillis,tipo,editTextDistancia.text.toString().toFloat())
-               dbHelper.insertEntrenamiento(entrenamiento)
-               dbHelper.selectAllEntrenamientos()
+            dbHelper= DatabaseHelper(this)
+            val currentTimeMillis = System.currentTimeMillis()
+            var entrenamiento= Entrenamiento(idUser,currentTimeMillis,tipo,editTextDistancia.text.toString().toFloat())
+            dbHelper.insertEntrenamiento(entrenamiento)
+            dbHelper.selectAllEntrenamientos()
 
             val dashboard= Intent(this,Dashboard::class.java)
             dashboard.putExtra("nombreUsuario", intent.getSerializableExtra("nombreUsuario") as String)
