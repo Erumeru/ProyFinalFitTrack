@@ -183,7 +183,9 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
 
     fun getEntrenamientosEnFecha(idUser: Int, fecha: Long): List<Entrenamiento> {
         val entrenamientosList = mutableListOf<Entrenamiento>()
-        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA = $fecha AND $COLUMN_USER_ID = $idUser"
+        val startOfDay = getStartOfDayTimestamp(fecha)
+        val endOfDay = getEndOfDayTimestamp(fecha)
+        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= $startOfDay AND $COLUMN_FECHA < $endOfDay AND $COLUMN_USER_ID = $idUser"
         val db = this.readableDatabase
         val cursor = db.rawQuery(query, null)
 
@@ -201,6 +203,78 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.close()
         return entrenamientosList
     }
+
+    private fun getStartOfDayTimestamp(timestamp: Long): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = timestamp
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        return calendar.timeInMillis
+    }
+
+    private fun getEndOfDayTimestamp(timestamp: Long): Long {
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = timestamp
+            set(Calendar.HOUR_OF_DAY, 23)
+            set(Calendar.MINUTE, 59)
+            set(Calendar.SECOND, 59)
+            set(Calendar.MILLISECOND, 999)
+        }
+        return calendar.timeInMillis
+    }
+
+
+    fun getEntrenamientosEntreFechas(idUser: Int, fechaInicio: Long, fechaFin: Long): List<Entrenamiento> {
+        val entrenamientosList = mutableListOf<Entrenamiento>()
+
+        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= $fechaInicio AND $COLUMN_FECHA <= $fechaFin AND $COLUMN_USER_ID = $idUser"
+
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, null)
+
+        while (cursor.moveToNext()) {
+            val userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+            val fecha = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FECHA))
+            val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
+            val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
+
+            val entrenamiento = Entrenamiento(userId, fecha, tipo, distancia)
+            entrenamientosList.add(entrenamiento)
+        }
+
+        cursor.close()
+        db.close()
+        return entrenamientosList
+    }
+    fun calcularDistanciaSemanaAnterior(idUser: Long): Float {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, -7) // Retroceder 7 días
+        val fechaInicioSemanaAnterior = calendar.timeInMillis
+
+        val currentTimeMillis = System.currentTimeMillis()
+
+        val query = "SELECT SUM($COLUMN_DISTANCIA) FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= ? AND $COLUMN_FECHA < ? AND $COLUMN_USER_ID = ?"
+
+        val db = this.readableDatabase
+        val cursor = db.rawQuery(query, arrayOf(fechaInicioSemanaAnterior.toString(), currentTimeMillis.toString(), idUser.toString()))
+
+        var distanciaSemanaAnterior = 0f
+
+        if (cursor.moveToFirst()) {
+            distanciaSemanaAnterior = cursor.getFloat(0)
+        }
+
+        cursor.close()
+        db.close()
+
+        return distanciaSemanaAnterior
+    }
+
+
+
 
 
 

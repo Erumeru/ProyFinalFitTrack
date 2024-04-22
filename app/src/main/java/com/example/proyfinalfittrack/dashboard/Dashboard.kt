@@ -40,8 +40,6 @@ class Dashboard : AppCompatActivity() {
     private lateinit var viewBarraCorrer: View
     private lateinit var viewBarraBici: View
 
-    private val listaTextViewsKilometros = mutableListOf<TextView>()
-    private val listaTextViewsDiferencia = mutableListOf<TextView>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,8 +72,47 @@ class Dashboard : AppCompatActivity() {
 
 
         val distanciaTotalRecorrida=sumaTotalDistancias()
+        val distanciaDias=sumarDistanciasDelDiaActual()
         val maxWidth=tvSumaCaminar.layoutParams.width
         println("dadsd $maxWidth")
+
+        val calendar = Calendar.getInstance()
+
+/// Domingo
+        val calendarDomingo = Calendar.getInstance()
+        calendarDomingo.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+        val fechaDomingo = calendarDomingo.timeInMillis
+
+// Lunes
+        val calendarLunes = Calendar.getInstance()
+        calendarLunes.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        val fechaLunes = calendarLunes.timeInMillis
+
+// Martes
+        val calendarMartes = Calendar.getInstance()
+        calendarMartes.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY)
+        val fechaMartes = calendarMartes.timeInMillis
+
+// Miércoles
+        val calendarMiercoles = Calendar.getInstance()
+        calendarMiercoles.set(Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY)
+        val fechaMiercoles = calendarMiercoles.timeInMillis
+
+// Jueves
+        val calendarJueves = Calendar.getInstance()
+        calendarJueves.set(Calendar.DAY_OF_WEEK, Calendar.THURSDAY)
+        val fechaJueves = calendarJueves.timeInMillis
+
+// Viernes
+        val calendarViernes = Calendar.getInstance()
+        calendarViernes.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY)
+        val fechaViernes = calendarViernes.timeInMillis
+
+// Sábado
+        val calendarSabado = Calendar.getInstance()
+        calendarSabado.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY)
+        val fechaSabado = calendarSabado.timeInMillis
+
 
         linearCaminar.post{
             cargarDistanciasRecorridas(tvSumaCaminar, listaEnt, "caminar", viewBarraCaminar,distanciaTotalRecorrida)
@@ -107,56 +144,63 @@ class Dashboard : AppCompatActivity() {
         }
 
 
-        //Sabado
-        val diferenciaSemanaAnterior = calcularDiferenciaSemanaAnterior()
+        // Sábado
+        val distanciaSabado = calcularDistanciaDiaEspecifico(fechaSabado)
+        val diferenciaSabado = calcularDiferenciaDiaEspecifico(fechaSabado)
         val tvKilometrosSabado = findViewById<TextView>(R.id.tvKilometrosSabado)
         val tvDiferenciaSabado = findViewById<TextView>(R.id.tvDiferenciaSabado)
+        tvKilometrosSabado.text = getString(R.string.km_format, distanciaSabado.toString())
+        tvDiferenciaSabado.text = getString(R.string.dif_format, diferenciaSabado.toString())
 
-        tvKilometrosSabado.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaSabado.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
-
-        //Domingo
+// Domingo
+        val distanciaDomingo = calcularDistanciaDiaEspecifico(fechaDomingo)
+        val diferenciaDomingo = calcularDiferenciaDiaEspecifico(fechaDomingo)
         val tvKilometrosDomingo = findViewById<TextView>(R.id.tvKilometrosDomingo)
         val tvDiferenciaDomingo = findViewById<TextView>(R.id.tvDiferenciaDomingo)
+        tvKilometrosDomingo.text = getString(R.string.km_format, distanciaDomingo.toString())
+        tvDiferenciaDomingo.text = getString(R.string.dif_format, diferenciaDomingo.toString())
 
-        tvKilometrosDomingo.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaDomingo.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
-
-        //Lunes
+// Lunes
+        val distanciaLunes = calcularDistanciaDiaEspecifico(fechaLunes)
+        val diferenciaLunes = calcularDiferenciaDiaEspecifico(fechaLunes)
         val tvKilometrosLunes = findViewById<TextView>(R.id.tvKilometrosLunes)
         val tvDiferenciaLunes = findViewById<TextView>(R.id.tvDiferenciaLunes)
+        tvKilometrosLunes.text = getString(R.string.km_format, distanciaLunes.toString())
+        tvDiferenciaLunes.text = getString(R.string.dif_format, diferenciaLunes.toString())
 
-        tvKilometrosLunes.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaLunes.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
 
-        //Martes
+
+        // Martes
+        val distanciaMartes = calcularDistanciaDiaEspecifico(fechaMartes)
+        val diferenciaMartes = calcularDiferenciaDiaEspecifico(fechaMartes)
         val tvKilometrosMartes = findViewById<TextView>(R.id.tvKilometrosMartes)
         val tvDiferenciaMartes = findViewById<TextView>(R.id.tvDiferenciaMartes)
+        tvKilometrosMartes.text = getString(R.string.km_format, distanciaMartes.toString())
+        tvDiferenciaMartes.text = getString(R.string.dif_format, diferenciaMartes.toString())
 
-        tvKilometrosMartes.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaMartes.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
-
-        //Miercoles
+// Miércoles
+        val distanciaMiercoles = calcularDistanciaDiaEspecifico(fechaMiercoles)
+        val diferenciaMiercoles = calcularDiferenciaDiaEspecifico(fechaMiercoles)
         val tvKilometrosMiercoles = findViewById<TextView>(R.id.tvKilometrosMiercoles)
         val tvDiferenciaMiercoles = findViewById<TextView>(R.id.tvDiferenciaMiercoles)
+        tvKilometrosMiercoles.text = getString(R.string.km_format, distanciaMiercoles.toString())
+        tvDiferenciaMiercoles.text = getString(R.string.dif_format, diferenciaMiercoles.toString())
 
-        tvKilometrosMiercoles.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaMiercoles.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
-
-        //Jueves
+// Jueves
+        val distanciaJueves = calcularDistanciaDiaEspecifico(fechaJueves)
+        val diferenciaJueves = calcularDiferenciaDiaEspecifico(fechaJueves)
         val tvKilometrosJueves = findViewById<TextView>(R.id.tvKilometrosJueves)
         val tvDiferenciaJueves = findViewById<TextView>(R.id.tvDiferenciaJueves)
+        tvKilometrosJueves.text = getString(R.string.km_format, distanciaJueves.toString())
+        tvDiferenciaJueves.text = getString(R.string.dif_format, diferenciaJueves.toString())
 
-        tvKilometrosJueves.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaJueves.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
-
-        //Viernes
-
+// Viernes
+        val distanciaViernes = calcularDistanciaDiaEspecifico(fechaViernes)
+        val diferenciaViernes = calcularDiferenciaDiaEspecifico(fechaViernes)
         val tvKilometrosViernes = findViewById<TextView>(R.id.tvKilometrosViernes)
         val tvDiferenciaViernes = findViewById<TextView>(R.id.tvDiferenciaViernes)
-
-        tvKilometrosViernes.text = getString(R.string.km_format, distanciaTotalRecorrida.toString())
-        tvDiferenciaViernes.text = getString(R.string.dif_format, diferenciaSemanaAnterior.toString())
+        tvKilometrosViernes.text = getString(R.string.km_format, distanciaViernes.toString())
+        tvDiferenciaViernes.text = getString(R.string.dif_format, diferenciaViernes.toString())
     }
 
     fun configurarConstancia(listaCompleta:List<Entrenamiento>,lista30DiasMenos:List<Entrenamiento>){
@@ -379,4 +423,58 @@ class Dashboard : AppCompatActivity() {
         val fecha = Date(millis)
         return dateFormat.format(fecha)
     }
+
+
+
+    private fun sumarDistanciasDelDiaActual(): Float {
+        val idUser = intent.getSerializableExtra("idUsuario") as Int
+        val fechaActual = System.currentTimeMillis()
+
+        // Obtener la fecha de inicio del día actual
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = fechaActual
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        val inicioDiaActual = calendar.timeInMillis
+
+        // Obtener la fecha de fin del día actual
+        calendar.set(Calendar.HOUR_OF_DAY, 23)
+        calendar.set(Calendar.MINUTE, 59)
+        calendar.set(Calendar.SECOND, 59)
+        calendar.set(Calendar.MILLISECOND, 999)
+        val finDiaActual = calendar.timeInMillis
+
+        // Obtener los entrenamientos del día actual
+        val listaEntrenamientosDiaActual = dbHelper.getEntrenamientosEntreFechas(idUser, inicioDiaActual, finDiaActual)
+
+        // Sumar las distancias de los entrenamientos del día actual
+        var distanciaTotalDelDia = 0.0f
+        for (entrenamiento in listaEntrenamientosDiaActual) {
+            distanciaTotalDelDia += entrenamiento.distancia
+        }
+
+        return distanciaTotalDelDia
+    }
+
+    private fun calcularDistanciaDiaEspecifico(fechaEspecifica: Long): Float {
+        val idUser = intent.getSerializableExtra("idUsuario") as Int
+        val listaEntrenamientosDiaEspecifico = dbHelper.getEntrenamientosEnFecha(idUser,fechaEspecifica)
+        var distanciaTotal = 0.0f
+        for (entrenamiento in listaEntrenamientosDiaEspecifico) {
+            distanciaTotal += entrenamiento.distancia
+        }
+        return distanciaTotal
+    }
+
+    private fun calcularDiferenciaDiaEspecifico(fechaEspecifica: Long): Float {
+        val idUser = intent.getSerializableExtra("idUsuario") as Int
+        val listaEntrenamientosDiaEspecifico = dbHelper.getEntrenamientosEnFecha(idUser, fechaEspecifica)
+        val distanciaDiaEspecifico = listaEntrenamientosDiaEspecifico.sumByDouble { it.distancia.toDouble() }.toFloat()
+        val distanciaSemanaAnterior = dbHelper.calcularDistanciaSemanaAnterior(fechaEspecifica)
+        return distanciaDiaEspecifico - distanciaSemanaAnterior
+    }
+
+
 }
