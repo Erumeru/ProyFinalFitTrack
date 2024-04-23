@@ -249,28 +249,29 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
         db.close()
         return entrenamientosList
     }
-    fun calcularDistanciaSemanaAnterior(idUser: Long): Float {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, -7) // Retroceder 7 días
-        val fechaInicioSemanaAnterior = calendar.timeInMillis
 
-        val currentTimeMillis = System.currentTimeMillis()
 
-        val query = "SELECT SUM($COLUMN_DISTANCIA) FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= ? AND $COLUMN_FECHA < ? AND $COLUMN_USER_ID = ?"
+    fun getEntrenamientosEntreDias(idUser: Int, fechaInicio: Long, fechaFin: Long): List<Entrenamiento> {
+        val entrenamientosList = mutableListOf<Entrenamiento>()
+
+        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= ? AND $COLUMN_FECHA <= ? AND $COLUMN_USER_ID = ?"
 
         val db = this.readableDatabase
-        val cursor = db.rawQuery(query, arrayOf(fechaInicioSemanaAnterior.toString(), currentTimeMillis.toString(), idUser.toString()))
+        val cursor = db.rawQuery(query, arrayOf(fechaInicio.toString(), fechaFin.toString(), idUser.toString()))
 
-        var distanciaSemanaAnterior = 0f
+        while (cursor.moveToNext()) {
+            val userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+            val fecha = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FECHA))
+            val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
+            val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
 
-        if (cursor.moveToFirst()) {
-            distanciaSemanaAnterior = cursor.getFloat(0)
+            val entrenamiento = Entrenamiento(userId, fecha, tipo, distancia)
+            entrenamientosList.add(entrenamiento)
         }
 
         cursor.close()
         db.close()
-
-        return distanciaSemanaAnterior
+        return entrenamientosList
     }
 
 
