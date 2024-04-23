@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_dark_background">
 
-    <!-- ImageView con el logo y efecto de desvanecimiento -->
+    <!-- ImageView con el logo -->
     <ImageView
         android:id="@+id/imageLogo"
         android:layout_width="wrap_content"
@@ -11,9 +11,9 @@
         android:src="@drawable/logoft"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp"
-        android:alpha="0.6" /> <!-- Valor de alpha para el desvanecimiento -->
+        android:alpha="0.6" />
 
-    <!-- TextView para mostrar la distancia recorrida -->
+    <!-- Distancia recorrida -->
     <TextView
         android:id="@+id/txtDistanciaRecorrida"
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:textColor="@color/white"
         android:textSize="24sp" />
 
-    <!-- TextView para mostrar el tiempo transcurrido -->
+    <!-- Tiempo transcurrido -->
     <TextView
         android:id="@+id/txtTiempoTranscurrido"
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         android:textColor="@color/white"
         android:textSize="24sp" />
 
-    <!-- Botón para iniciar/terminar el registro automático -->
+    <!-- Botón para iniciar/terminar  -->
     <Button
         android:id="@+id/btnIniciarTerminar"
         android:layout_width="wrap_content"

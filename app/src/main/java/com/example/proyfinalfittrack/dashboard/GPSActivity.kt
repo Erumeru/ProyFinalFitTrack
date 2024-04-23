@@ -1,6 +1,7 @@
 package com.example.proyfinalfittrack.dashboard
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
@@ -80,9 +81,10 @@ class GPSActivity : AppCompatActivity(), LocationListener {
 
         locationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
-            1000L,
+            5000L,
             0f,
             this
+
         )
     }
 
@@ -101,15 +103,20 @@ class GPSActivity : AppCompatActivity(), LocationListener {
             val entrenamiento = Entrenamiento(idUser, endTimeMillis, tipoActividad, distanciaRecorridaKm)
             db.insertEntrenamiento(entrenamiento)
             mostrarToast("Entrenamiento guardado con éxito")
+
+            // Update dashboard
+            val dashboardIntent = Intent(this, Dashboard::class.java)
+            dashboardIntent.putExtra("idUsuario", idUser)
+            startActivity(dashboardIntent)
         } else {
-            mostrarToast("No se pudo obtener el ID del usuario. Entrenamiento no guardado.")
+            mostrarToast("Entrenamiento no guardado, lo sentimos.")
         }
         actualizarUI()
     }
 
     private fun calcularVelocidadPromedio(distancia: Float, tiempoMillis: Long): Float {
         return if (tiempoMillis != 0L) {
-            distancia / (tiempoMillis / 1000f)
+            distancia / (tiempoMillis / 5000f)
         } else {
             0f
         }
