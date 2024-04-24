@@ -44,7 +44,7 @@
         android:layout_below="@id/txtTiempoTranscurrido"
         android:layout_centerHorizontal="true"
         android:layout_margin="100dp"
-        android:text="Iniciar"
+        android:text="Terminar"
         android:background="@drawable/boton" />
     </RelativeLayout>
 

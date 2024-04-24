@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.proyfinalfittrack.R
@@ -38,20 +39,15 @@ class GPSActivity : AppCompatActivity(), LocationListener {
         txtDistanciaRecorrida = findViewById(R.id.txtDistanciaRecorrida)
         txtTiempoTranscurrido = findViewById(R.id.txtTiempoTranscurrido)
         btnIniciarTerminar = findViewById(R.id.btnIniciarTerminar)
-
         db = DatabaseHelper(this)
 
-        btnIniciarTerminar.setOnClickListener {
-            if (!isTracking) {
-                iniciarSeguimiento()
-                btnIniciarTerminar.text = "Terminar"
-            } else {
-                detenerSeguimiento()
-                btnIniciarTerminar.text = "Iniciar"
-            }
-        }
-
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        iniciarSeguimiento() // Iniciar seguimiento automáticamente al crear la actividad
+
+        btnIniciarTerminar.setOnClickListener {
+            detenerSeguimiento()
+        }
     }
 
     private fun iniciarSeguimiento() {
@@ -84,7 +80,6 @@ class GPSActivity : AppCompatActivity(), LocationListener {
             5000L,
             0f,
             this
-
         )
     }
 
@@ -99,24 +94,52 @@ class GPSActivity : AppCompatActivity(), LocationListener {
         val tipoActividad = determinarTipoActividad(velocidadPromedio)
         val distanciaRecorridaKm = distanciaRecorrida / 1000f
 
+        confirmarActividad()
+        actualizarUI()
+    }
+
+    private fun confirmarActividad() {
+        val velocidadPromedio = calcularVelocidadPromedio(distanciaRecorrida, System.currentTimeMillis() - startTimeMillis)
+        val actividadFisica = determinarTipoActividad(velocidadPromedio)
+
+        mostrarDetalles(actividadFisica)
+    }
+
+    private fun mostrarDetalles(actividadFisica: String) {
+        val distanciaRecorridaKm = distanciaRecorrida / 1000f
+        val mensaje = "Distancia recorrida: ${String.format("%.2f", distanciaRecorridaKm)} km\n" +
+                "Tiempo transcurrido: ${formatoTiempo(System.currentTimeMillis() - startTimeMillis)}\n" +
+                "Actividad física: $actividadFisica"
+
+        AlertDialog.Builder(this)
+            .setTitle("Detalles de la actividad")
+            .setMessage(mensaje)
+            .setPositiveButton("Listo") { dialog, _ ->
+                dialog.dismiss()
+                guardarEntrenamiento(actividadFisica, distanciaRecorridaKm)
+            }
+            .show()
+    }
+
+    private fun guardarEntrenamiento(tipoActividad: String, distancia: Float) {
         if (idUser != -1) {
-            val entrenamiento = Entrenamiento(idUser, endTimeMillis, tipoActividad, distanciaRecorridaKm)
+            val endTimeMillis = System.currentTimeMillis()
+            val entrenamiento = Entrenamiento(idUser, endTimeMillis, tipoActividad, distancia)
             db.insertEntrenamiento(entrenamiento)
+            db.selectAllEntrenamientos()
             mostrarToast("Entrenamiento guardado con éxito")
 
-            // Update dashboard
             val dashboardIntent = Intent(this, Dashboard::class.java)
             dashboardIntent.putExtra("idUsuario", idUser)
             startActivity(dashboardIntent)
         } else {
             mostrarToast("Entrenamiento no guardado, lo sentimos.")
         }
-        actualizarUI()
     }
 
     private fun calcularVelocidadPromedio(distancia: Float, tiempoMillis: Long): Float {
         return if (tiempoMillis != 0L) {
-            distancia / (tiempoMillis / 5000f)
+            distancia / (tiempoMillis / 1000f)
         } else {
             0f
         }
@@ -149,6 +172,14 @@ class GPSActivity : AppCompatActivity(), LocationListener {
         Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
     }
 
+    private fun formatoTiempo(tiempoMillis: Long): String {
+        val segundos = (tiempoMillis / 1000).toInt()
+        val horas = segundos / 3600
+        val minutos = (segundos % 3600) / 60
+        val segundosRestantes = segundos % 60
+        return String.format("%02d:%02d:%02d", horas, minutos, segundosRestantes)
+    }
+
     override fun onLocationChanged(location: Location) {
         if (lastLocation != null) {
             distanciaRecorrida += lastLocation!!.distanceTo(location)
@@ -156,6 +187,11 @@ class GPSActivity : AppCompatActivity(), LocationListener {
 
         lastLocation = location
         actualizarUI()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        locationManager.removeUpdates(this)
     }
 
     companion object {

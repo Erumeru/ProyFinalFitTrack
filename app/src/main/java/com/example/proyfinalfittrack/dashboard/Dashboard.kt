@@ -1,6 +1,8 @@
 package com.example.proyfinalfittrack.dashboard
 
 
+
+import android.app.Activity
 import android.content.Intent
 
 import androidx.appcompat.app.AppCompatActivity
@@ -138,10 +140,10 @@ class Dashboard : AppCompatActivity() {
         }
 
         agregarGPS.setOnClickListener(){
-            val agregar= Intent(this, GPSActivity::class.java)
-            agregar.putExtra("idUsuario",intent.getSerializableExtra("idUsuario") as Int)
+            val agregar = Intent(this, GPSActivity::class.java)
+            agregar.putExtra("idUsuario", intent.getSerializableExtra("idUsuario") as Int)
             agregar.putExtra("nombreUsuario", intent.getSerializableExtra("nombreUsuario") as String)
-            startActivity(agregar)
+            startActivityForResult(agregar, REQUEST_CODE_GPS_ACTIVITY)
 
         }
 
@@ -384,6 +386,22 @@ class Dashboard : AppCompatActivity() {
         return nuevaLista
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_GPS_ACTIVITY && resultCode == Activity.RESULT_OK) {
+            val actividadGuardada = data?.getStringExtra("actividadGuardada")
+            if (!actividadGuardada.isNullOrEmpty()) {
+                cargarEntrenamientos()
+                val distanciaTotalRecorrida = sumaTotalDistancias()
+                linearCaminar.post {
+                    cargarDistanciasRecorridas(tvSumaCaminar, listaEnt, "caminar", viewBarraCaminar, distanciaTotalRecorrida)
+                    cargarDistanciasRecorridas(tvSumaCorrer, listaEnt, "correr", viewBarraCorrer, distanciaTotalRecorrida)
+                    cargarDistanciasRecorridas(tvSumaBici, listaEnt, "bici", viewBarraBici, distanciaTotalRecorrida)
+                }
+            }
+        }
+    }
+
     fun cargarEntrenamientosDiasAtras(dias: Int){
         val idUser=intent.getSerializableExtra("idUsuario") as Int
         listaEntDiasAtras=dbHelper.getEntremaientosXDiasAtras(idUser,dias)
@@ -573,7 +591,9 @@ class Dashboard : AppCompatActivity() {
         return calendar.timeInMillis
     }
 
-
+    companion object {
+        private const val REQUEST_CODE_GPS_ACTIVITY = 1001
+    }
 
 
 }
