@@ -251,29 +251,6 @@ class DatabaseHelper (context: Context) : SQLiteOpenHelper(context, DATABASE_NAM
     }
 
 
-    fun getEntrenamientosEntreDias(idUser: Int, fechaInicio: Long, fechaFin: Long): List<Entrenamiento> {
-        val entrenamientosList = mutableListOf<Entrenamiento>()
-
-        val query = "SELECT * FROM $TABLE_ENTRENAMIENTOS WHERE $COLUMN_FECHA >= ? AND $COLUMN_FECHA <= ? AND $COLUMN_USER_ID = ?"
-
-        val db = this.readableDatabase
-        val cursor = db.rawQuery(query, arrayOf(fechaInicio.toString(), fechaFin.toString(), idUser.toString()))
-
-        while (cursor.moveToNext()) {
-            val userId = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-            val fecha = cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_FECHA))
-            val tipo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TIPO))
-            val distancia = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_DISTANCIA))
-
-            val entrenamiento = Entrenamiento(userId, fecha, tipo, distancia)
-            entrenamientosList.add(entrenamiento)
-        }
-
-        cursor.close()
-        db.close()
-        return entrenamientosList
-    }
-
 
 
 
