@@ -249,10 +249,7 @@ class Dashboard : AppCompatActivity() {
         //Barras Domingo
         findViewById<MaterialCardView>(R.id.domingoActivo).layoutParams.height=calcularHeightConstancias(maxHeight,sumaDomingoPrincipal,sumaDomingoPrincipal+sumaDomingoSombra)
         findViewById<MaterialCardView>(R.id.domingoSombra).layoutParams.height=calcularHeightConstancias(maxHeight,sumaDomingoSombra,sumaDomingoPrincipal+sumaDomingoSombra)
-    ///println("${sumaDomingoPrincipal-sumaDomingoSombra} HHHHHH" )
-       // println("${sumaDomingoPrincipal} HHHHHH" )
-        //
-        // println("${sumaDomingoSombra} WWWWWWW" )
+
 
         //Barras Lunes
         findViewById<MaterialCardView>(R.id.lunesActivo).layoutParams.height=calcularHeightConstancias(maxHeight,sumaLunesPrincipal,sumaLunesPrincipal+sumaLunesSombra)
@@ -285,10 +282,6 @@ class Dashboard : AppCompatActivity() {
 
     }
 
-    fun calcularDiferenciaSemanaAnterior(sumaPrincipal: Int, sumaSombra: Int): Int {
-        // Calcula la diferencia entre la semana actual y la semana anterior
-        return sumaPrincipal - sumaSombra
-    }
 
 
 
@@ -478,38 +471,9 @@ class Dashboard : AppCompatActivity() {
 
 
 
-    private fun calcularDistanciaSemana(idUser: Int, inicioSemana: Long, finSemana: Long): Float {
-        val listaEntrenamientosSemana = dbHelper.getEntrenamientosEntreFechas(idUser, inicioSemana, finSemana)
-        var distanciaTotal = 0.0f
-        for (entrenamiento in listaEntrenamientosSemana) {
-            distanciaTotal += entrenamiento.distancia
-        }
-        return distanciaTotal
-    }
 
-    private fun obtenerInicioSemanaAnterior(fechaEspecifica: Long): Long {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = fechaEspecifica
-        calendar.add(Calendar.WEEK_OF_YEAR, -1) // Retroceder una semana
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek) // Ir al primer día de la semana
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.timeInMillis
-    }
 
-    private fun obtenerFinSemanaAnterior(fechaEspecifica: Long): Long {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = fechaEspecifica
-        calendar.add(Calendar.WEEK_OF_YEAR, -1) // Retroceder una semana
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek + 6) // Ir al último día de la semana
-        calendar.set(Calendar.HOUR_OF_DAY, 23)
-        calendar.set(Calendar.MINUTE, 59)
-        calendar.set(Calendar.SECOND, 59)
-        calendar.set(Calendar.MILLISECOND, 999)
-        return calendar.timeInMillis
-    }
+
 
 
 
@@ -526,9 +490,16 @@ class Dashboard : AppCompatActivity() {
         // Calcular la distancia total del mismo día de la semana actual
         val distanciaDiaSemanaActual = calcularDistanciaDiaEspecifico(fechaEspecifica)
 
-        // Calcular la diferencia entre los kilómetros recorridos
-        return distanciaDiaSemanaActual - distanciaDiaSemanaAnterior
+        // Verificar si hay distancias válidas para ambos días
+        if (distanciaDiaSemanaAnterior != 0.0f && distanciaDiaSemanaActual != 0.0f) {
+            // Calcular la diferencia entre los kilómetros recorridos
+            return  distanciaDiaSemanaActual - distanciaDiaSemanaAnterior
+        } else {
+            // Si alguna de las distancias es cero, establecer la diferencia en cero
+            return 0.0f
+        }
     }
+
 
 
 

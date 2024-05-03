@@ -58,23 +58,7 @@ class Agregar_ejercicio : AppCompatActivity() {
 
 
 
-        // Guardar el idUser en SharedPreferences si no existe
-        val sharedPreferences = getSharedPreferences("miAppPreferences", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        if (!sharedPreferences.contains("idUsuario")) {
-            editor.putInt("idUsuario", idUser)
-            editor.apply()
-        }
 
-        // Verificar si hay un ID de usuario guardado y dirigir al usuario directamente a la pantalla principal si es así
-        val idUsuario = sharedPreferences.getInt("idUsuario", -1)
-        if (idUsuario != -1) {
-            val intent = Intent(this, Dashboard::class.java)
-            intent.putExtra("idUsuario", idUsuario)
-            startActivity(intent)
-            finish() // Opcional: finaliza esta actividad para que el usuario no pueda volver atrás
-            return // Importante: sal de la función para evitar ejecutar el resto del código
-        }
 
         imgCaminar.setOnClickListener(){
             if(tvCaminar.currentTextColor!=colorSeleccionado) {
