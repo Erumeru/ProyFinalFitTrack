@@ -3,6 +3,7 @@ package com.example.proyfinalfittrack.sesiones
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var btnUnirse : Button
     private lateinit var tvLogin : TextView
+    private lateinit var sharedPreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         btnUnirse=findViewById(R.id.btnUnete)
         tvLogin=findViewById(R.id.tvIniciarSesion)
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
 
         btnUnirse.setOnClickListener {
 
@@ -73,23 +77,35 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun ingresarUsuario(nombre: String, correo: String, password: String){
-        val dbHelper= DatabaseHelper(this)
+    fun ingresarUsuario(nombre: String, correo: String, password: String) {
+        val dbHelper = DatabaseHelper(this)
+        val db = dbHelper.writableDatabase
 
-        val db=dbHelper.writableDatabase
-
-
-        val usuario=User(nombre,correo,password)
-        val contentValues=ContentValues().apply {
-            put("nombre",usuario.nombre)
-            put("correo",usuario.correo)
-            put("password",usuario.password)
+        val usuario = User(nombre, correo, password)
+        val contentValues = ContentValues().apply {
+            put("nombre", usuario.nombre)
+            put("correo", usuario.correo)
+            put("password", usuario.password)
         }
-        val newRow= db.insert("users",null,contentValues)
+
+        // Insertar en la base de datos
+        val newRow = db.insert("users", null, contentValues)
         db.close()
 
-        iniciarSesion(correo, password)
+        // Verificar si la inserción fue exitosa
+        if (newRow != -1L) {
+            // Guardar el correo en SharedPreferences solo si la inserción fue exitosa
+            val editor = sharedPreferences.edit()
+            editor.putString("correo", correo)
+            editor.apply()
+
+            // Iniciar sesión
+            iniciarSesion(correo, password)
+        } else {
+            // Mostrar mensaje de error u otras acciones
+        }
     }
+
 
     fun selectAll(){
         val dbHelper= DatabaseHelper(this)
@@ -180,8 +196,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun iniciarSesion(correo: String, password: String) {
+        // Guardar el correo en SharedPreferences antes de iniciar la actividad
+        val editor = sharedPreferences.edit()
+        editor.putString("correo", correo)
+        editor.apply()
+
+        // Iniciar la actividad después de guardar el correo en SharedPreferences
         val intent = Intent(this, activityLogin::class.java)
         startActivity(intent)
     }
+
 
 }

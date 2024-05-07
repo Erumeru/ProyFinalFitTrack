@@ -2,6 +2,7 @@ package com.example.proyfinalfittrack.sesiones
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -16,6 +17,8 @@ class activityLogin : AppCompatActivity() {
 
     private lateinit var tvRegiter : TextView
     private lateinit var btnLogin : Button
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +26,8 @@ class activityLogin : AppCompatActivity() {
 
         tvRegiter=findViewById(R.id.tvRegistrate)
         btnLogin=findViewById(R.id.btnLogin)
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
 
 
         tvRegiter.setOnClickListener(){
@@ -77,8 +82,13 @@ class activityLogin : AppCompatActivity() {
         cursor.close()
         db.close()
 
-        return count > 0
+        // Obtener el correo guardado en SharedPreferences
+        val savedEmail = sharedPreferences.getString("correo", "")
+
+        // Verificar si el correo coincide con el almacenado en SharedPreferences
+        return savedEmail == email && count > 0
     }
+
 
     fun getUserNameByEmail(email: String): String? {
         val dbHelper = DatabaseHelper(this)
